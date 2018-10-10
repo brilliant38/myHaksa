@@ -61,23 +61,21 @@
 				    </tr>
 				    <tr>
 				    	<th>강의상황서 번호</th>
-				    	<td>2123</td>
+				    	<td>${insertScore.lectureStatusNumber}</td>
 				    	<th>과목명</th>
-				    	<td>수학</td>
+				    	<td>${insertScore. }</td>
 				    	<th>확정여부</th>
-				    	<td>N</td>
+				    	<td>${insertScore. }</td>
 				    	<th>공개여부</th>
-				    	<td>N</td>
+				    	<td>${insertScore. }</td>
 				    	<th>학점</th>
-				    	<td>1</td>
+				    	<td>${insertScore. }</td>
 				    </tr>
 				    <tr>
 				    	<th>최대 수강 인원</th>
-				    	<td>30</td>
+				    	<td>${insertScore. }</td>
 				    	<th>총 수강 인원</th>
-				    	<td>25</td>
-				    	<th>미입력 인원</th>
-				    	<td>0</td>
+				    	<td>${insertScore. }</td>
 				    </tr>
 				    <tr>
 				    	<th colspan="10"><br>성적,등급,점수입력</th>
@@ -94,18 +92,20 @@
 				    	<th>총점</th>
 				    	<th>재수강횟수</th>
 				    </tr>
-				    <tr>
-				    	<td>1</td>
-				    	<td>2007614224</td>
-				    	<td>이광재</td>
-				    	<td>전필</td>
-				    	<td><input id="attendancePoint" type="text"></td>
-				    	<td><input type="text"></td>
-				    	<td><input type="text"></td>
-				    	<td><input type="text"></td>
-				    	<td>100</td>
-				    	<td>2</td>
-				    </tr>
+				    <c:forEach var="row" items="${enrolCourse}">
+					    <tr>
+					    	<td>${row.enrolCourseNo }</td>
+					    	<td>${row.enrolCourseStudentNumber }</td>
+					    	<td>${row.enrolCoursestudentName }</td>
+					    	<td>${row.enrolCourseCompletionDivision }</td>
+					    	<td><input id="attendancePoint" type="text"></td>
+					    	<td><input type="text"></td>
+					    	<td><input type="text"></td>
+					    	<td><input type="text"></td>
+					    	<td>100</td>
+					    	<td>${row.enrolCourseCourseRetakeNumber }</td>
+					    </tr>
+				    </c:forEach>
 				    <tr>
 				    	<td colspan="10" align="right"><button type="button" class="btn btn-success">총점계산</button></td>
 				    </tr>

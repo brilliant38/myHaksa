@@ -68,12 +68,12 @@
 			<p>담당강좌목록</p>
 			
 			<form>
-				<table border=1>
+				<table class="table table-bordered">
 					<thead align="center">
 						<tr>
 							<th>년도</th>
 							<th>학기</th>
-							<th>강의상황서<br/> 번호</th>
+							<th>강의상황서 번호</th>
 							<th>과목명</th>
 							<th>학점</th>
 							<th>입력 확정</th>
@@ -87,7 +87,7 @@
 								<td>${row.insertScoreSchoolYear }</td>
 								<td>${row.insertScoreSemester }</td>
 								<td>${row.lectureStatusNumber }</td>
-								<td><a id="insertScore" href="/courseAndScore/enrolScore">${row.insertScoreCourseName}</a></td>
+								<td><a id="insertScore" href="/courseAndScore/enrolScore?subject=${row.insertScoreCourseName}">${row.insertScoreCourseName}</a></td>
 								<td>${row.insertScoreCourseCredit }</td>
 								<td>${row.insertScoreFixScore }</td>
 								<td>${row.insertScoreOpenScore }</td>

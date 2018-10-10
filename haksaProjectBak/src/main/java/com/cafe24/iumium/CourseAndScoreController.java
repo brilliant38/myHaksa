@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,7 +76,7 @@ public class CourseAndScoreController {
 	 * 3. 교수의 세션id를 검색하여 담당 과목을 조회 하고 과목 정보를 불러온다. 
 	 */
 	
-	@RequestMapping("/courseAndScore/enrolScoreCourseList")
+	@RequestMapping(value="/courseAndScore/enrolScoreCourseList")
 	public ModelAndView enrolScoreCourseList(ModelAndView mv, HttpSession session) {
 		
 		System.out.println("CourseAndScoreController - enrolScoreCourseList() 호출");
@@ -98,11 +99,20 @@ public class CourseAndScoreController {
 		return mv;
 	}
 	
-	@RequestMapping("/courseAndScore/enrolScore")
-	public String enrolScoreCourse(ModelAndView mv) {
+	/*
+	 * 4. 교수의 강의 과목명을 입력하여 해당 과목을 수강하는 학생들의 정보를 조회한다.
+	 */
+	@RequestMapping(value="/courseAndScore/enrolScore" , method= {RequestMethod.POST, RequestMethod.GET})
+	public String enrolScoreCourse(Model model, HttpServletRequest request) {
 		System.out.println("CourseAndScoreController - enrolScoreCourse() 호출");
 		
+		String subjectName = (String)request.getParameter("subject");
 		
+		List<EnrolCourse> enrolCourse = courseAndScoreService.searchEnrolScoreCourse(subjectName);
+		List<InsertScore> insertScore = courseAndScoreService.
+		
+		model.addAttribute("enrolCourse", enrolCourse);
+		model.addAttribute("insertScore", insertScore);
 		
 		return "/courseAndScore/enrolScore";
 	}

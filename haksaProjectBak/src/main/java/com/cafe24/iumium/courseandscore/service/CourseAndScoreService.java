@@ -45,7 +45,6 @@ public class CourseAndScoreService {
 		return courseAndScoreDao.inquireSearchLectureById(id);
 	}
 	
-	
 	/*
 	 * 	3.입력된 교수 세션 아이디로 담당 과목 코드 조회
 	 * 	조회된 과목 코드로 과목 명 조회
@@ -58,8 +57,15 @@ public class CourseAndScoreService {
 		System.out.println("InsertScore 과목코드 출력: " + InsertScore.get(0).getEnrolSubjectNo());
 		System.out.println("InsertScore 과목명 출력: " + InsertScore.get(0).getInsertScoreCourseName());
 		
-		
-		
 		return InsertScore;
+	}
+	
+	/*
+	 * 4.교수가 강의중인 과목을 클릭하여 입력된 과목명을 
+	 * 수강 신청 내역 테이블에서 조회하여 겹치는 학생의 정보와 과목 정보를 반환  
+	 */
+	
+	public List<EnrolCourse> searchEnrolScoreCourse(String subjectName) {
+		return courseAndScoreDao.inquireEnrolScoreCourse(subjectName); 
 	}
 }

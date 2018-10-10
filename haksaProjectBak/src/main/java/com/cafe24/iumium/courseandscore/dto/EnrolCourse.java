@@ -20,6 +20,7 @@ public class EnrolCourse {
 	private int classByDepartmentNumber;
 	private String enrolCourseNo;
 	private String enrolCourseStudentNumber;
+	private String enrolCoursestudentName;
 	private String enrolCourseCourseName;
 	private String enrolCourseCompletionDivision;
 	private int enrolCourseCourseCredit;
@@ -57,6 +58,13 @@ public class EnrolCourse {
 	}
 	public void setEnrolCourseStudentNumber(String enrolCourseStudentNumber) {
 		this.enrolCourseStudentNumber = enrolCourseStudentNumber;
+	}
+	
+	public String getEnrolCoursestudentName() {
+		return enrolCoursestudentName;
+	}
+	public void setEnrolCoursestudentName(String enrolCoursestudentName) {
+		this.enrolCoursestudentName = enrolCoursestudentName;
 	}
 	public String getEnrolCourseCourseName() {
 		return enrolCourseCourseName;

@@ -46,4 +46,9 @@ public class CourseAndScoreDao {
 	public List<InsertScore> inquireEnrolScoreCourseCode(String id) {
 		return sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreCourseCode", id);
 	}
+	
+	// 5. 교과명으로 수강신청내역 테이블 조회
+	public List<EnrolCourse> inquireEnrolScoreCourse(String subjectName) {
+		return sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreCourse", subjectName);
+	}
 }
