@@ -24,6 +24,8 @@ public class EnrolCourse {
 	private String enrolCourseCourseName;
 	private String enrolCourseCompletionDivision;
 	private int enrolCourseCourseCredit;
+	private int rank;
+	private double insertScoreTotalAverageScore;
 	private String enrolCourseDeptName;
 	private int enrolCourseSchoolYear;
 	private String enrolCourseClass;
@@ -83,6 +85,18 @@ public class EnrolCourse {
 	}
 	public void setEnrolCourseCourseCredit(int enrolCourseCourseCredit) {
 		this.enrolCourseCourseCredit = enrolCourseCourseCredit;
+	}
+	public int getRank() {
+		return rank;
+	}
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+	public double getInsertScoreTotalAverageScore() {
+		return insertScoreTotalAverageScore;
+	}
+	public void setInsertScoreTotalAverageScore(double insertScoreTotalAverageScore) {
+		this.insertScoreTotalAverageScore = insertScoreTotalAverageScore;
 	}
 	public String getEnrolCourseDeptName() {
 		return enrolCourseDeptName;

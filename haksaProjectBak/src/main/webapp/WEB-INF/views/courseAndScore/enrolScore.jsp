@@ -27,7 +27,6 @@
 	}
 </style>
 
-
 </head>
 
 <body id="page-top">
@@ -59,24 +58,22 @@
 				    <tr>
 				    	<th colspan="10"><br>성적입력</th>
 				    </tr>
-				    <tr>
-				    	<th>강의상황서 번호</th>
-				    	<td>${insertScore.lectureStatusNumber}</td>
-				    	<th>과목명</th>
-				    	<td>${insertScore. }</td>
-				    	<th>확정여부</th>
-				    	<td>${insertScore. }</td>
-				    	<th>공개여부</th>
-				    	<td>${insertScore. }</td>
-				    	<th>학점</th>
-				    	<td>${insertScore. }</td>
-				    </tr>
-				    <tr>
-				    	<th>최대 수강 인원</th>
-				    	<td>${insertScore. }</td>
-				    	<th>총 수강 인원</th>
-				    	<td>${insertScore. }</td>
-				    </tr>
+					    <tr>
+					    	<th>과목명</th>
+					    	<td>${enrolCourse.enrolCourseCourseName }</td>
+					    	<th>확정여부</th>
+					    	<td></td>
+					    	<th>공개여부</th>
+					    	<td></td>
+					    	<th>학점</th>
+					    	<td>${enrolCourse.enrolCourseCourseCredit }</td>
+					    </tr>
+					    <tr>
+					    	<th>최대 수강 인원</th>
+					    	<td></td>
+					    	<th>총 수강 인원</th>
+					    	<td></td>
+					    </tr>
 				    <tr>
 				    	<th colspan="10"><br>성적,등급,점수입력</th>
 				    </tr>

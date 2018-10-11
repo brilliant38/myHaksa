@@ -40,7 +40,15 @@
 			<form action="searchCourse" method="post">
 				<table border="1">
 					<tr>
-						<td>학번 : <input type="text" name="id"></td>
+						<td>
+							<select name="option">
+								<option value="year">년도</option>
+								<option value="dept">학과</option>
+								<option value="grade">학년</option>
+								<option value="studentnumber">학번</option>
+							</select>
+							<input type="text" name="value">
+						</td>
 						<td><button type="submit">수강신청내역조회</button></td>
 					</tr>
 				</table>
@@ -51,16 +59,15 @@
 						<tr>
 							<th>과목명</th>
 							<th>이수구분</th>
-							 <th>학점</th>
-							 <th>학과명</th>
-							 <th>학년</th>
+							<th>학점</th>
+							<th>학과명</th>
+							<th>학년</th>
 							<th>반</th>
-							 <th>교수명</th>
+							<th>교수명</th>
 							<th>강의실명</th>
 							<th>년도</th>
 							<th>학기</th>
-							 <th>재수강횟수</th>
-							<th>총 수강인원</th>
+							<th>재수강횟수</th>
 						</tr>
 					</thead>
 					<tbody align="center">
@@ -68,15 +75,14 @@
 							<tr>
 								<td>${row.enrolCourseCourseName}</td>
 								<td>${row.enrolCourseCompletionDivision}</td>
-								 <td>${row.enrolCourseCourseCredit}</td>
-								 <td>${row.enrolCourseDeptName}</td>
-								 <td>${row.enrolCourseSchoolYear}</td>
+								<td>${row.enrolCourseCourseCredit}</td>
+								<td>${row.enrolCourseDeptName}</td>
+								<td>${row.enrolCourseSchoolYear}</td>
 								<td>${row.enrolCourseClass}</td>
-								 <td>${row.enrolCourseProfName}</td>
+								<td>${row.enrolCourseProfName}</td>
 								<td>${row.enrolCourseClassroom}</td>
 								<td>${row.enrolCourseYear}</td>
 								<td>${row.enrolCourseSemester}</td>
-								 <td>${row.enrolCourseCourseRetakeNumber}</td>
 								<td>${row.enrolCourseCourseRetakeNumber}</td>
 							</tr>
 						</c:forEach>

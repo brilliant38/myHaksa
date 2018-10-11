@@ -20,8 +20,9 @@
 
 <!-- Custom styles for this template-->
 <link href="/resources/css/sb-admin.css" rel="stylesheet">
+
 <style>
-	.printScoreRankInClassMain{
+	.printScoreRankInDeptMain{
 		text-align : left;
 		font-weight: bold;
 	}
@@ -41,55 +42,55 @@
 
 			<div class="container-fluid">
 			<!-- 여기에 내용이 담긴다 -->
-				
+			
 				printScoreRankInClass.jsp 입니다.
-				<form action="/courseAndScore/printScoreRankInClass" method="post">
+				<form action="/courseAndScore/printScoreRankInDept" method="post">
 					<table class="table table-bordered">
 						<tr align="right">
 							<td scope="col" colspan="10">
-								<p class = "printScoreRankInClassMain">반 석차조회 리스트 </p>
-								<p class = "printScoreRankInClassMain"> 반 입력 : 
-									<select name="ClassName">
-										<option value="A">A</option>
-										<option value="B">B</option>
+								<p class = "printScoreRankInDeptMain">학과 석차조회 리스트 </p>
+								<p class = "printScoreRankInDeptMain"> 반 입력 : 
+									<select name="DeptName">
+										<option value="골프경영학과">골프경영학과</option>
+										<option value="컴퓨터정보과">컴퓨터정보과</option>
 									</select>
 								</p>
 								<button type="button" class="btn btn-info">이전화면</button>
 								<button type="submit" class="btn btn-info">조회하기</button>
 							</td>
-						</tr>
+					    </tr>
 						<tr>
 							<td scope="col" colspan="10"></td>
-						</tr>
-						<tr>
-							<th colspan="10"><br>반 석차 조회</th>
-						</tr>
-						<tr>
-							<th>석차</th>
-							<th>학번</th>
-							<th>평점</th>
-							<th>성명</th>
-							<th>이수구분</th>
-							<th>출석점수</th>
-							<th>중간점수</th>
-							<th>기말점수</th>
-							<th>제출물점수</th>
-							<th>총점</th>
-						</tr>
-						<c:forEach var="row" items="${enrolCourse}">
-							<tr>
-								<td>${row.rank }</td>
-								<td>${row.enrolCourseStudentNumber }</td>
-								<td>${row.insertScoreTotalAverageScore }</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-					   </c:forEach>
+					    </tr>
+					    <tr>
+					    	<th colspan="10"><br>학과 석차 조회</th>
+					    </tr>
+					    <tr>
+					    	<th>석차</th>
+					    	<th>학번</th>
+					    	<th>평점</th>
+					    	<th>성명</th>
+					    	<th>이수구분</th>
+					    	<th>출석점수</th>
+					    	<th>중간점수</th>
+					    	<th>기말점수</th>
+					    	<th>제출물점수</th>
+					    	<th>총점</th>
+					    </tr>
+					    <c:forEach var="row" items="${enrolCourse}">
+						    <tr>
+						    	<td>${row.rank }</td>
+						    	<td>${row.enrolCourseStudentNumber }</td>
+						    	<td>${row.insertScoreTotalAverageScore }</td>
+						    	<td></td>
+						    	<td></td>
+						    	<td></td>
+						    	<td></td>
+						    	<td></td>
+						    	<td></td>
+						    	<td></td>
+						    </tr>
+						</c:forEach>
 					</table>
 				</form>
 			

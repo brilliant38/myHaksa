@@ -1,6 +1,5 @@
 package com.cafe24.iumium.courseandscore.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +40,16 @@ public class CourseAndScoreService {
 	 *	2.입력된 아이디로 수강신청 테이블 조회
 	 *	강의상황서 레코드의 속성별로 코드는 해당 코드의 필요값 조회
 	 */
-	public List<EnrolCourse> searchEnrolCourse(String id){
-		return courseAndScoreDao.inquireSearchLectureById(id);
+	
+	public List<EnrolCourse> searchEnrolCourse(String[] array){
+		return courseAndScoreDao.inquireSearchLectureById(array);
 	}
 	
 	/*
 	 * 	3.입력된 교수 세션 아이디로 담당 과목 코드 조회
 	 * 	조회된 과목 코드로 과목 명 조회
 	 */
+	
 	public List<InsertScore> searchEnrolScoreCourseList(String id) {
 		
 		//입력된 교수 세션 아이디로 담당 과목 코드 조회
@@ -62,10 +63,32 @@ public class CourseAndScoreService {
 	
 	/*
 	 * 4.교수가 강의중인 과목을 클릭하여 입력된 과목명을 
-	 * 수강 신청 내역 테이블에서 조회하여 겹치는 학생의 정보와 과목 정보를 반환  
+	 * 수강 신청 내역 테이블에서 조회하여 겹치는 학생의 정보와 과목 정보를 반환  하는 dao 호출
 	 */
 	
 	public List<EnrolCourse> searchEnrolScoreCourse(String subjectName) {
-		return courseAndScoreDao.inquireEnrolScoreCourse(subjectName); 
+		
+		//해당 수강생 학번 리스트 조회
+		List<EnrolCourse> enrolCourse = courseAndScoreDao.inquireEnrolScoreStudentNum(subjectName);
+		
+		
+		return enrolCourse; 
 	}
+	
+	
+	
+	/*
+	 * 5.입력 받은 반 조건으로 성적입력 테이블 조회하는 dao 호출
+	 */
+	
+	public List<EnrolCourse> searchEnrolScoreCourseByClass(String ClassName) {
+		return courseAndScoreDao.inquireEnrolScoreCourseByClass(ClassName);
+	}
+	/*
+	 * 6.입력 받은 학과 조건으로 성적입력 테이블 조회하는 dao 호출
+	 */
+	public List<EnrolCourse> searchprintScoreCourseByDept(String DeptName) {
+		return courseAndScoreDao.inquireprintScoreCourseByDept(DeptName);
+	}
+	
 }

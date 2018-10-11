@@ -79,7 +79,6 @@
 			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 				<a class="dropdown-item" href="/courseAndScore/enrolCourse">학생 수강신청 및 취소</a> 
 				<a class="dropdown-item" href="/courseAndScore/searchCourse">학생 수강과목 조회</a>
-				<a class="dropdown-item" href="/courseAndScore/printCourse">학생 수강신청 출력</a>
 			</div>
 		</li>
 		<li class="nav-item dropdown">
@@ -88,10 +87,8 @@
 			</a>
 			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 				<a class="dropdown-item" href="/courseAndScore/enrolScoreCourseList">성적입력 과목 목록</a> 
-				<a class="dropdown-item" href="/courseAndScore/printCourseAndScore">과목 별 학생 성적</a>
 				<a class="dropdown-item" href="/courseAndScore/printScoreRankInClass">반 석차 생성관리</a>
-				<a class="dropdown-item" href="/courseAndScore/printScoreControl">과목별 성적 취소 관리</a>
-				<a class="dropdown-item" href="/courseAndScore/selectScoreBySemester">학생 학기별 성적 조회</a>
+				<a class="dropdown-item" href="/courseAndScore/printScoreRankInDept">학과 석차 생성관리</a>
 			</div>
 		</li>
 		

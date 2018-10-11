@@ -36,10 +36,10 @@ public class CourseAndScoreDao {
 		return sqlSessionTemplate.selectList(nameSpace + "inquireLectureStatus", lectureStatusNumber);
 	}
 	
-	// 3. 입력된 학번으로 수강신청내역 테이블에서 학번이 일치하는 모든 레코드의 컬럼 값 조회
+	// 3. 입력된 조건, 값으로 수강신청내역 테이블에서 학번이 일치하는 모든 레코드의 컬럼 값 조회
 	
-	public List<EnrolCourse> inquireSearchLectureById(String id) {
-		return sqlSessionTemplate.selectList(nameSpace + "inquireSearchLectureById", id);
+	public List<EnrolCourse> inquireSearchLectureById(String[] array) {
+		return sqlSessionTemplate.selectList(nameSpace + "inquireSearchLectureById", array);
 	}
 	
 	//	4. 세션 교수 아이디로 담당 과목코드 조회
@@ -47,8 +47,36 @@ public class CourseAndScoreDao {
 		return sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreCourseCode", id);
 	}
 	
-	// 5. 교과명으로 수강신청내역 테이블 조회
-	public List<EnrolCourse> inquireEnrolScoreCourse(String subjectName) {
-		return sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreCourse", subjectName);
+	// 5. 교과명으로 수강신청내역 테이블 학번 리스트 조회
+	public List<EnrolCourse> inquireEnrolScoreStudentNum(String subjectName) {
+		return sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreStudentNum", subjectName);
+	}
+	
+	// 6.학번 리스트로 성적 입력 할 학생 정보 조회
+	
+	public List<InsertScore> inquireEnrolScoreCourse(List<EnrolCourse> enrolCourse) {
+		
+		List<InsertScore> insertScore = sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreCourse", enrolCourse);
+		
+		return insertScore; 
+	}
+	
+	// 7.입력받은 반의 값으로 성적입력테이블에서 반이 일치하는 학생들의 평균 총점을 조회한다.
+	public List<EnrolCourse> inquireEnrolScoreCourseByClass(String ClassName) {
+		
+		List<EnrolCourse> enrolCourse = sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreCourseByClass", ClassName);
+		
+		if (enrolCourse.size() != 0) {
+			System.out.println("학생 평점 출력 : " + enrolCourse.get(0).getInsertScoreTotalAverageScore());
+		}
+		
+		return enrolCourse;
+	}
+	// 8.입력받은 학과의 값으로 성적입력테이블에서 반이 일치하는 학생들의 평균 총점을 조회한다.
+	public List<EnrolCourse> inquireprintScoreCourseByDept(String DeptName) {
+		
+		List<EnrolCourse> enrolCourse = sqlSessionTemplate.selectList(nameSpace + "inquireprintScoreCourseByDept", DeptName);
+		
+		return enrolCourse;
 	}
 }

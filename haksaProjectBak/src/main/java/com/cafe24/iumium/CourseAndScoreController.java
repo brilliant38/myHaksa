@@ -61,11 +61,30 @@ public class CourseAndScoreController {
 	@RequestMapping(value="/courseAndScore/searchCourse", method= {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView searchCourse(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("CourseAndScoreController - searchCourse() 호출");
-		String id = request.getParameter("id");
+		String option = null;
+		String value = null;
 		
-		List<EnrolCourse> enrolCourse = courseAndScoreService.searchEnrolCourse(id);
+		if(request.getParameter("option") == null) {
+			option = "studentnumber";
+		} else {
+			option = request.getParameter("option");
+		}
 		
-		// 
+		if(request.getParameter("value") == null) {
+			value = "";
+		} else {
+			value = request.getParameter("value");
+		}
+		
+		String[] array = new String[2];
+		array[0] = option;
+		array[1] = value;
+		
+		System.out.println("array[0] 출력 : " + array[0]);
+		System.out.println("array[1] 출력 : " + array[1]);
+		
+		List<EnrolCourse> enrolCourse = courseAndScoreService.searchEnrolCourse(array);
+		
 		mv.addObject("enrolCourse", enrolCourse);
 		mv.setViewName("/courseAndScore/searchCourse");
 
@@ -73,7 +92,7 @@ public class CourseAndScoreController {
 	}
 	
 	/*
-	 * 3. 교수의 세션id를 검색하여 담당 과목을 조회 하고 과목 정보를 불러온다. 
+	 * 3. 교수의 세션id를 검색하여 담당 과목을 조회 하고 과목 정보의 리스트를 불러온다. 
 	 */
 	
 	@RequestMapping(value="/courseAndScore/enrolScoreCourseList")
@@ -100,22 +119,63 @@ public class CourseAndScoreController {
 	}
 	
 	/*
-	 * 4. 교수의 강의 과목명을 입력하여 해당 과목을 수강하는 학생들의 정보를 조회한다.
+	 * 4. 교수의 강의 과목명을 입력하여 과목을 수강하는 학생들의 정보가 담긴 리스트가 조회된다.
+	 * 
 	 */
+	
 	@RequestMapping(value="/courseAndScore/enrolScore" , method= {RequestMethod.POST, RequestMethod.GET})
 	public String enrolScoreCourse(Model model, HttpServletRequest request) {
 		System.out.println("CourseAndScoreController - enrolScoreCourse() 호출");
 		
 		String subjectName = (String)request.getParameter("subject");
 		
-		List<EnrolCourse> enrolCourse = courseAndScoreService.searchEnrolScoreCourse(subjectName);
-		List<InsertScore> insertScore = courseAndScoreService.
 		
+		List<EnrolCourse> enrolCourse = courseAndScoreService.searchEnrolScoreCourse(subjectName);
+		
+		//강의 정보도 같이 전송해야 하므로 컨트롤러에서 처리해야 함.
+		//model.addAttribute("EnrolCourse",EnrolCourse);
 		model.addAttribute("enrolCourse", enrolCourse);
-		model.addAttribute("insertScore", insertScore);
 		
 		return "/courseAndScore/enrolScore";
 	}
 	
+	/*
+	 * 5. 반을 입력하여 성적 입력 테이블을 조회하고, 일치하는 학생들의 정보를 불러온다.
+	 */
 	
+	@RequestMapping(value="/courseAndScore/printScoreRankInClass", method= {RequestMethod.POST, RequestMethod.GET})
+	public String printScoreCourseByClass(Model model, HttpServletRequest request) {
+		System.out.println("CourseAndScoreController - EnrolScoreCourseByClass() 호출");
+		
+		String ClassName = null;
+		
+		if(request.getParameter("ClassName") != null) {
+			ClassName = (String)request.getParameter("ClassName");
+		}
+		
+		List<EnrolCourse> enrolCourse = courseAndScoreService.searchEnrolScoreCourseByClass(ClassName);
+		
+		model.addAttribute("enrolCourse", enrolCourse);
+		
+		
+		return "/courseAndScore/printScoreRankInClass";
+	}
+	/*
+	 * 6.
+	 */
+	@RequestMapping(value="/courseAndScore/printScoreRankInDept", method= {RequestMethod.POST, RequestMethod.GET})
+	public String printScoreCourseByDept(Model model, HttpServletRequest request) {
+		
+		String DeptName = null;
+		
+		if(request.getParameter("DeptName") != null) {
+			DeptName = (String)request.getParameter("DeptName");
+		}
+		
+		List<EnrolCourse> enrolCourse = courseAndScoreService.searchprintScoreCourseByDept(DeptName);
+		
+		model.addAttribute("enrolCourse", enrolCourse);
+		
+		return "/courseAndScore/printScoreRankInDept";
+	}
 }
