@@ -21,6 +21,17 @@
 <!-- Custom styles for this template-->
 <link href="/resources/css/sb-admin.css" rel="stylesheet">
 
+<style>
+	#searchCourseMain{
+		text-align : left;
+		font-weight: bold;
+	}
+	#searchCourseButton{
+		text-align : right;
+	}
+	#condition { max-width: 80px; display: inline-block;}
+	#optionName {width: 200px;}
+</style>
 
 </head>
 
@@ -38,23 +49,34 @@
 			<!-- 여기에 내용이 담긴다 -->
 			
 			<form action="searchCourse" method="post">
-				<table border="1">
+				<table class="table table-bordered">
+					<tr align="right">
+						<td scope="col" colspan="10">
+							<p id = "searchCourseMain">수강신청내역</p>
+							<br><br>
+						</td>
+				    </tr>
 					<tr>
 						<td>
-							<select name="option">
-								<option value="year">년도</option>
-								<option value="dept">학과</option>
-								<option value="grade">학년</option>
-								<option value="studentnumber">학번</option>
-							</select>
-							<input type="text" name="value">
+							
+							<div class="col-xs-2">
+								<span>
+									<select class="form-control" id ="condition" name="option">
+										<option value="year">년도</option>
+										<option value="dept">학과</option>
+										<option value="grade">학년</option>
+										<option value="studentnumber">학번</option>
+									</select>
+								</span>
+								<input id ="optionName" type="text" name="value">
+							</div> 
+							<p id="searchCourseButton" ><button type="submit" class="btn btn-info">수강신청내역조회</button></p>
 						</td>
-						<td><button type="submit">수강신청내역조회</button></td>
 					</tr>
 				</table>
 			</form>
 			<br>
-			<table border=1>
+			<table class="table table-bordered">
 					<thead align="center">
 						<tr>
 							<th>과목명</th>

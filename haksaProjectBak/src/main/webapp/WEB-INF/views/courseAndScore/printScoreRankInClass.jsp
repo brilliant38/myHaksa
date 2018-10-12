@@ -70,24 +70,14 @@
 							<th>평점</th>
 							<th>성명</th>
 							<th>이수구분</th>
-							<th>출석점수</th>
-							<th>중간점수</th>
-							<th>기말점수</th>
-							<th>제출물점수</th>
-							<th>총점</th>
 						</tr>
-						<c:forEach var="row" items="${enrolCourse}">
+						<c:forEach var="row" items="${enrolCourse}" varStatus="status">
 							<tr>
-								<td>${row.rank }</td>
+								<td>${status.count}</td>
 								<td>${row.enrolCourseStudentNumber }</td>
 								<td>${row.insertScoreTotalAverageScore }</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>${row.enrolCoursestudentName }</td>
+								<td>${row.enrolCourseCompletionDivision }</td>
 							</tr>
 					   </c:forEach>
 					</table>

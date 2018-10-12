@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<style>
+body {
+    font-family: "맑은 고딕";
+}
+table,td,th {
+    border: 1px solid #000;
+    border-collapse:collapse;
+    padding:5px;
+}
+
+/* 디폴트 스타일 */
+/*
+.tDnD_whileDrag {
+    background-color: #eee;
+}*/
+
+/*사용자 정의 스타일 */
+.dragRow {
+    background-color: #eee;
+}
+
+td.dragHandle {
+
+}
+
+td.showDragHandle {
+    background-image: url(images/updown2.gif);
+    background-repeat: no-repeat;
+    background-position: center left;
+    cursor: move;
+}
+
+
+table td {
+    padding:5px;
+}
+
+</style>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="jquery.tablednd.js"></script>
+  <script>
+    $(function(){
+        //tablednd 드래그앤드롭 실행 
+        $("#table-1").tableDnD();
+
+        $("#table-2").tableDnD({
+            onDragClass: "dragRow"    
+        });
+
+        
+        $('#table-3').tableDnD({
+            onDragClass: "dragRow",
+            onDrop: function(table, row) {
+                alert($('#table-3').tableDnDSerialize());
+            },
+            dragHandle: ".dragHandle"
+        });
+
+        $("#table-3 tr").not(".nodrag").hover(function() {
+              $(this.cells[0]).addClass('showDragHandle');
+        }, function() {
+              $(this.cells[0]).removeClass('showDragHandle');
+        });
+ 
+    })
+  </script>
+</head>
+
+<body>
+
+<table id="table-1" style="width: 500px;">
+    <tr class="nodrag nodrop">
+        <td >숫자</td><td>영어</td><td>한글</td>
+    </tr>
+    <tr>
+        <td>1</td><td>One</td><td>첫번째</td>
+    </tr>
+    <tr>
+        <td>2</td><td>Two</td><td>두번째</td>
+    </tr>
+    <tr>
+        <td>3</td><td>Three</td><td>세번째</td>
+    </tr>
+    <tr>
+        <td>4</td><td>Four</td><td>네번째</td>
+    </tr>
+    <tr>
+        <td>5</td><td>Five</td><td>다섯번째</td>
+    </tr>
+</table>
+
+<br>
+<br>
+
+<table id="table-2" style="width: 500px;">
+    <tr class="nodrag nodrop">
+        <td>숫자</td><td>영어</td><td>한글</td>
+    </tr>
+    <tr>
+        <td>1</td><td>One</td><td>첫번째</td>
+    </tr>
+    <tr>
+        <td>2</td><td>Two</td><td>두번째</td>
+    </tr>
+    <tr>
+        <td>3</td><td>Three</td><td>세번째</td>
+    </tr>
+    <tr>
+        <td>4</td><td>Four</td><td>네번째</td>
+    </tr>
+    <tr>
+        <td>5</td><td>Five</td><td>다섯번째</td>
+    </tr>
+</table>
+
+<br>
+<br>
+
+<table id="table-3" style="width: 500px;">
+    <tr class="nodrag nodrop">
+        <td>숫자</td><td>영어</td><td>한글</td>
+    </tr>
+    <tr id="table-3-row-1">
+        <td align="center" class="dragHandle">1</td><td>One</td><td>첫번째</td>
+    </tr>
+    <tr id="table-3-row-2">
+        <td align="center" class="dragHandle">2</td><td>Two</td><td>두번째</td>
+    </tr>
+    <tr id="table-3-row-3">
+        <td  align="center" class="dragHandle">3</td><td>Three</td><td>세번째</td>
+    </tr>
+    <tr id="table-3-row-4">
+        <td  align="center" class="dragHandle">4</td><td>Four</td><td>네번째</td>
+    </tr>
+    <tr id="table-3-row-5">
+        <td  align="center" class="dragHandle">5</td><td>Five</td><td>다섯번째</td>
+    </tr>
+</table>
+
+</body>
+</html>

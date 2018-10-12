@@ -19,8 +19,8 @@ public class CourseAndScoreDao {
 	
 	// 1.세션 아이디 받아서 학과코드, 반 조회
 	public int inquireClassByDepartmentNumber(String id){
-		System.out.println("CourseAndScoreDao - inquireStudentDept() 호출");
-		List<EnrolCourse> list = sqlSessionTemplate.selectList(nameSpace + "inquireStudentDept", id);
+		System.out.println("CourseAndScoreDao - inquireClassByDepartmentNumber() 호출");
+		List<EnrolCourse> list = sqlSessionTemplate.selectList(nameSpace + "inquireClassByDepartmentNumber", id);
 		
 		int classByDepartmentNumber = list.get(0).getClassByDepartmentNumber();
 		System.out.println("학번으로 조회된 학과별반번호 : " + classByDepartmentNumber);
@@ -35,6 +35,12 @@ public class CourseAndScoreDao {
 		
 		return sqlSessionTemplate.selectList(nameSpace + "inquireLectureStatus", lectureStatusNumber);
 	}
+	// 2-1 관리자 계정일 시 모든 강의상황서 번호와 모든 속성코드 조회
+	
+		public List<EnrolCourse> inquireLectureStatusByAdmin(){
+			System.out.println("CourseAndScoreDao - inquireLectureStatusByAdmin() 호출");
+			return sqlSessionTemplate.selectList(nameSpace + "inquireLectureStatusByAdmin");
+		}
 	
 	// 3. 입력된 조건, 값으로 수강신청내역 테이블에서 학번이 일치하는 모든 레코드의 컬럼 값 조회
 	
@@ -45,6 +51,11 @@ public class CourseAndScoreDao {
 	//	4. 세션 교수 아이디로 담당 과목코드 조회
 	public List<InsertScore> inquireEnrolScoreCourseCode(String id) {
 		return sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreCourseCode", id);
+	}
+	
+//	4-1. 세션 관리자 아이디로 모든 과목코드 조회
+	public List<InsertScore> inquireEnrolScoreCourseCodeByAdmin() {
+		return sqlSessionTemplate.selectList(nameSpace + "inquireEnrolScoreCourseCodeByAdmin");
 	}
 	
 	// 5. 교과명으로 수강신청내역 테이블 학번 리스트 조회

@@ -48,8 +48,12 @@
 		
 	});
 </script>
-
-
+<style>
+	#enrolScoreCourseListMain{
+		text-align : left;
+		font-weight: bold;
+	}
+</style>
 </head>
 
 <body id="page-top">
@@ -70,6 +74,12 @@
 			<form>
 				<table class="table table-bordered">
 					<thead align="center">
+						<tr align="right">
+							<td scope="col" colspan="10">
+								<p id = "enrolScoreCourseListMain">담당과목성적등록</p>
+								<br><br>
+							</td>
+					    </tr>
 						<tr>
 							<th>년도</th>
 							<th>학기</th>

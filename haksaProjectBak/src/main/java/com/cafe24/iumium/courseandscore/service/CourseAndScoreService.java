@@ -1,5 +1,6 @@
 package com.cafe24.iumium.courseandscore.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +19,27 @@ public class CourseAndScoreService {
 	private CourseAndScoreDao courseAndScoreDao;
 	
 	/*1. 세션 아이디 받아서 학과별반번호 조회
+	 * 	관리자 계정일 경우에는 모든 강의상황서 조회
 	 * 	학과별반번호 일치하는 강의상황서 조회
 	 * 	조회된 과목 정보 출력 
 	 */
-	
 	public List<EnrolCourse> selectEnrolCourse(String id){ 
 		System.out.println("CourseAndScoreService - selectEnrolCourse() 호출");
 		
-		int classByDepartmentNumber = courseAndScoreDao.inquireClassByDepartmentNumber(id);
-		System.out.println("세션 학번으로 학과별반번호 조회 : " + classByDepartmentNumber);
+		int classByDepartmentNumber = 0; 
+				
+		List<EnrolCourse> lectureStatusNumber = new ArrayList<EnrolCourse>();
 		
-		List<EnrolCourse> lectureStatusNumber = courseAndScoreDao.inquireLectureStatus(classByDepartmentNumber);
-		System.out.println("학과별반번호로 강의상황서 번호 : " + lectureStatusNumber);
+		if(id.equals("admin")) {
+			lectureStatusNumber = courseAndScoreDao.inquireLectureStatusByAdmin();
+			System.out.println("학과별반번호로 강의상황서 번호 : " + lectureStatusNumber);
+		} else if (id != null) {
+			classByDepartmentNumber = courseAndScoreDao.inquireClassByDepartmentNumber(id);
+			System.out.println("세션 학번으로 학과별반번호 조회 : " + classByDepartmentNumber);
+			
+			lectureStatusNumber = courseAndScoreDao.inquireLectureStatus(classByDepartmentNumber);
+			System.out.println("학과별반번호로 강의상황서 번호 : " + lectureStatusNumber);
+		}
 		
 		//list = courseAndScoreDao.inquireDeptCourse(deptCode);
 		
@@ -50,15 +60,21 @@ public class CourseAndScoreService {
 	 * 	조회된 과목 코드로 과목 명 조회
 	 */
 	
-	public List<InsertScore> searchEnrolScoreCourseList(String id) {
+	public List<InsertScore> searchEnrolScoreCourseList(String id, String level) {
 		
-		//입력된 교수 세션 아이디로 담당 과목 코드 조회
-		List<InsertScore> InsertScore =  courseAndScoreDao.inquireEnrolScoreCourseCode(id);
+		List<InsertScore> insertScore =  new ArrayList<InsertScore>();
 		
-		System.out.println("InsertScore 과목코드 출력: " + InsertScore.get(0).getEnrolSubjectNo());
-		System.out.println("InsertScore 과목명 출력: " + InsertScore.get(0).getInsertScoreCourseName());
+		//입력된 세션 아이디로 담당 과목 코드 조회
+		if(id.equals("admin")) {
+			insertScore =  courseAndScoreDao.inquireEnrolScoreCourseCodeByAdmin();
+		} else if (level.equals("student")) {
+			insertScore =  courseAndScoreDao.inquireEnrolScoreCourseCode(id);
+		}
 		
-		return InsertScore;
+		System.out.println("InsertScore 과목코드 출력: " + insertScore.get(0).getEnrolSubjectNo());
+		System.out.println("InsertScore 과목명 출력: " + insertScore.get(0).getInsertScoreCourseName());
+		
+		return insertScore;
 	}
 	
 	/*
@@ -74,8 +90,6 @@ public class CourseAndScoreService {
 		
 		return enrolCourse; 
 	}
-	
-	
 	
 	/*
 	 * 5.입력 받은 반 조건으로 성적입력 테이블 조회하는 dao 호출

@@ -30,7 +30,7 @@ public class CourseAndScoreController {
 	*/
 	
 	@RequestMapping(value="/courseAndScore/enrolCourse")
-	public String enrolCourse(Model model, HttpSession session) {
+	public String enrolCourseList(Model model, HttpSession session) {
 		System.out.println("CourseAndScoreController - enrolCourse() 호출");
 		String id = null;
 		
@@ -52,6 +52,12 @@ public class CourseAndScoreController {
 		
 		return "/courseAndScore/enrolCourse";
 	}
+	/*
+	 * 1-1 선택된 과목의 행 정보를 모두 전달하는 배열 값을 받아서 수강신청 테이블에 입력
+	 */
+	
+	
+	
 	
 	/*
 	 *	2.수강 신청된 과목정보를 입력된 학번을 통해서 조회하는 메소드 
@@ -96,26 +102,26 @@ public class CourseAndScoreController {
 	 */
 	
 	@RequestMapping(value="/courseAndScore/enrolScoreCourseList")
-	public ModelAndView enrolScoreCourseList(ModelAndView mv, HttpSession session) {
+	public String enrolScoreCourseList(Model model, HttpSession session) {
 		
 		System.out.println("CourseAndScoreController - enrolScoreCourseList() 호출");
 		String id = null;
+		String level = null;
 		
-		/*if(session.getId() != null) {
+		if(session.getId() != null) {
 			id = (String)session.getAttribute("userId");
-		}*/
-		
-		id = "3456";
+			level = (String)session.getAttribute("userLevel");
+		}
 		
 		System.out.println("session ID : " + id);
+		System.out.println("session LEVEL : " + level);
 		
-		List<InsertScore> insertScore = courseAndScoreService.searchEnrolScoreCourseList(id);
+		List<InsertScore> insertScore = courseAndScoreService.searchEnrolScoreCourseList(id, level);
 		
-		mv.addObject("insertScore", insertScore);
-		mv.addObject("id", id);
-		mv.setViewName("/courseAndScore/enrolScoreCourseList");
+		model.addAttribute("insertScore", insertScore);
+		model.addAttribute("id", id);
 		
-		return mv;
+		return "/courseAndScore/enrolScoreCourseList";
 	}
 	
 	/*
@@ -129,7 +135,6 @@ public class CourseAndScoreController {
 		
 		String subjectName = (String)request.getParameter("subject");
 		
-		
 		List<EnrolCourse> enrolCourse = courseAndScoreService.searchEnrolScoreCourse(subjectName);
 		
 		//강의 정보도 같이 전송해야 하므로 컨트롤러에서 처리해야 함.
@@ -140,7 +145,7 @@ public class CourseAndScoreController {
 	}
 	
 	/*
-	 * 5. 반을 입력하여 성적 입력 테이블을 조회하고, 일치하는 학생들의 정보를 불러온다.
+	 * 5. 반별 석차 조회
 	 */
 	
 	@RequestMapping(value="/courseAndScore/printScoreRankInClass", method= {RequestMethod.POST, RequestMethod.GET})
@@ -161,7 +166,7 @@ public class CourseAndScoreController {
 		return "/courseAndScore/printScoreRankInClass";
 	}
 	/*
-	 * 6.
+	 * 6.학과별 석차 조회
 	 */
 	@RequestMapping(value="/courseAndScore/printScoreRankInDept", method= {RequestMethod.POST, RequestMethod.GET})
 	public String printScoreCourseByDept(Model model, HttpServletRequest request) {
