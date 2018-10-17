@@ -34,6 +34,7 @@ public class EnrolCourse {
 	private int enrolCourseYear;
 	private int enrolCourseSemester;
 	private int enrolCourseCourseRetakeNumber;
+	private int lectureStatusLimitNumber;
 	private String enrolCourseDate;
 	
 	
@@ -145,6 +146,12 @@ public class EnrolCourse {
 	}
 	public void setEnrolCourseCourseRetakeNumber(int enrolCourseCourseRetakeNumber) {
 		this.enrolCourseCourseRetakeNumber = enrolCourseCourseRetakeNumber;
+	}
+	public int getLectureStatusLimitNumber() {
+		return lectureStatusLimitNumber;
+	}
+	public void setLectureStatusLimitNumber(int lectureStatusLimitNumber) {
+		this.lectureStatusLimitNumber = lectureStatusLimitNumber;
 	}
 	public String getEnrolCourseDate() {
 		return enrolCourseDate;

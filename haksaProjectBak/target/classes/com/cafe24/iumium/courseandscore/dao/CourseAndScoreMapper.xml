@@ -25,7 +25,7 @@
 			,haksa_room.room_name as enrolCourseClassroom
 			,substring(haksa_semester.semester_code,1,4) as enrolCourseYear
 			,substring(haksa_semester.semester_code,6,1) as enrolCourseSemester
-			,haksa_lecture_status.lecture_status_limit_number as enrolCourseCourseRetakeNumber
+			,haksa_lecture_status.lecture_status_limit_number as lectureStatusLimitNumber
 			
 			
 		FROM haksa_lecture_status
@@ -44,7 +44,7 @@
 		and (haksa_type_of_completion.type_of_completion_code = haksa_lecture_status.type_of_completion_code)
 		and (haksa_class_by_department.class_by_department_number = haksa_lecture_status.class_by_department_number)
 		and (haksa_room.room_code = haksa_lecture_status.room_code)
-		and (haksa_semester.semester_code = haksa_lecture_status.semester_code)
+		and (haksa_class_by_department.semester_code = haksa_semester.semester_code)
 		and (haksa_department.dept_code = haksa_class_by_department.dept_code)
 		and (ilban_human.student_teacher_no = haksa_lecture_status.appointment_school_personnel_number)
 		
@@ -146,7 +146,6 @@
 		WHERE haksa_lecture_status.appointment_school_personnel_number = #{id}
 		
 		AND haksa_subject.subject_code = haksa_lecture_status.subject_code
-		
 	</select>
 	
 	<!-- 4-1 세션 관리자 아이디로 모든 과목코드 조회 -->
@@ -301,6 +300,40 @@
 		
 		GROUP BY haksa_enrol_course.enrol_course_student_number
 	</select>
+	
+	<insert id="insertEnrolCourse" parameterType="java.util.HashMap">
+		INSERT INTO haksa_enrol_course
+			(enrol_course_no
+			, enrol_course_student_number
+			, enrol_course_course_name
+			, enrol_course_completion_division
+			, enrol_course_course_credit
+			, enrol_course_dept_name
+			, enrol_course_school_year
+			, enrol_course_class
+			, enrol_course_prof_name
+			, enrol_course_classroom
+			, enrol_course_year
+			, enrol_course_semester
+			, enrol_course_course_retake_number
+			, enrol_course_date)
+		VALUES (
+			'116'
+			,'201800003'
+			,'영어1'
+			,'교필'
+			,2
+			,'골프경영학과'
+			,1
+			,'B'
+			,'구해성'
+			,'영어 강의실'
+			,'2018'
+			,'1'
+			,2
+			,now()
+			)
+	</insert>
 </mapper>
 
 

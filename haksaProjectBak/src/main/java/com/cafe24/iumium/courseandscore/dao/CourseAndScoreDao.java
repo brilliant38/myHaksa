@@ -1,5 +1,6 @@
 package com.cafe24.iumium.courseandscore.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -89,5 +90,9 @@ public class CourseAndScoreDao {
 		List<EnrolCourse> enrolCourse = sqlSessionTemplate.selectList(nameSpace + "inquireprintScoreCourseByDept", DeptName);
 		
 		return enrolCourse;
+	}
+	//9.입력받은 데이터를 차례로 수강신청내역 테이블에 입력한다.
+public int insertEnrolCourse(HashMap<String,EnrolCourse> CourseList) {
+		return sqlSessionTemplate.insert(nameSpace + "insertEnrolCourse",CourseList);
 	}
 }

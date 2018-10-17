@@ -10,6 +10,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>수강신청 및 정정</title><!-- Bootstrap core CSS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom fonts for this template-->
@@ -20,12 +22,65 @@
 
 <!-- Custom styles for this template-->
 <link href="/resources/css/sb-admin.css" rel="stylesheet">
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	$('.enrolDatas').click(function() {
+		
+		var str = ""
+		var tdArr = new Array(); 
+		
+		// 현재 클릭된 Row(<tr>)
+		var enrolDatas_tr = $(this);
+		var enrolDatas_td = enrolDatas_tr.children();
+		
+		console.log("클릭한 Row의 모든 데이터 : " + enrolDatas_tr.text());
+		
+		enrolDatas_td.each(function(i){
+	        tdArr.push(enrolDatas_td.eq(i).text());
+	    });
+		
+		console.log("배열에 담긴 값 : " + tdArr);
+		console.log("0번 배열에 담긴 값 : " + tdArr[0]);
+		
+ 		var num1 = tdArr.length;
+		
+		console.log("배열 길이 : " + num1);
+		
+		$('.enrolDatasList').insertBefore(function(){
+			
+			$('.enrolDatasList').empty();
+			
+			var text = '<tr onclick ="delete_data($(this))">';
+			
+			$.each(tdArr,function(i){
+					text += '<td>' + tdArr[i] + '</td>';
+			});
+			
+			text += '</tr>';
+			text += '<tr align="right"><td colspan="15"><button type="submit" class="btn btn-success">수강신청완료</button></td></tr>';
+			
+			$('.enrolDatasList').append(text);
+		});
+	});
+	
+	function delete_data(row)
+    {
+        row.closest('tr').remove();
+    }
+	
+		
+});
+	
+</script>
+
 <style>
 	#enrolCourseMain{
 		text-align : left;
 		font-weight: bold;
 	}
 </style>
+
 </head>
 
 <body id="page-top">
@@ -49,8 +104,9 @@
 				 3.학과 번호가 일치하는 과목들 정보 조회
 				 4.조회된 과목 정보 출력
 			 -->
-			<form action="enrolCourseWrite" method="post">
-				<table class="table table-bordered" id="table_1">
+			
+			<form action="/courseAndScore/addEnrolCourse" method="post">
+				<table class="table table-bordered table-hover text-center">
 					<thead align="center">
 						<tr align="right">
 							<td scope="col" colspan="15">
@@ -59,7 +115,6 @@
 							</td>
 					    </tr>
 						<tr>
-							<th>선택</th>
 							<th>강좌번호</th>
 							<th>학번</th>
 							<th>과목명</th>
@@ -78,8 +133,7 @@
 					</thead>
 					<tbody align="center">
 						<c:forEach var="row" items="${enrolCourse}">
-							<tr>
-								<td id="lectureStatusNumber"><input type="checkbox" name ="course" value="${row.lectureStatusNumber}"></td>
+							<tr class="enrolDatas">
 								<td id="lectureStatusNumber">${row.lectureStatusNumber}</td>
 								<td id="id">${id}</td>
 								<td id="enrolCourseCourseName">${row.enrolCourseCourseName}</td>
@@ -92,18 +146,19 @@
 								<td id="enrolCourseClassroom">${row.enrolCourseClassroom}</td>
 								<td id="enrolCourseYear">${row.enrolCourseYear}</td>
 								<td id="enrolCourseSemester">${row.enrolCourseSemester}</td>
-								<td id="enrolCourseCourseRetakeNumber">${row.enrolCourseCourseRetakeNumber}</td>
 								<td></td>
+								<td id="lectureStatusLimitNumber">${row.lectureStatusLimitNumber}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
+					
 				</table>
 				
-				<table class="table table-bordered">
+				<table class="table table-bordered table-hover text-center">
 					<thead align="center">
 						<tr align="left">
 							<td scope="col" colspan="15">
-								<p id = "enrolCourseMain">수강 신청 입력 과목</p>
+								<p id = "enrolCourseMain">과목 선택 내역</p>
 								<br><br>
 							</td>
 					    </tr>
@@ -121,35 +176,17 @@
 							<th>강의실명</th>
 							<th>년도</th>
 							<th>학기</th>
-							<th>재수강횟수</th>
 							<th>총 수강인원</th>
+							<th>재수강횟수</th>
 						</tr>
 					</thead>
-					<tbody align="center">
-						<c:forEach var="row" items="${enrolCourse}">
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</c:forEach>
+					<tbody align="center" class="enrolDatasList">
 						<tr align="right">
 							<td colspan="15"><button type="submit" class="btn btn-success">수강신청완료</button></td>
 						</tr>
 					</tbody>
 				</table>
+				
 			</form>
 
 			<!-- Sticky Footer -->

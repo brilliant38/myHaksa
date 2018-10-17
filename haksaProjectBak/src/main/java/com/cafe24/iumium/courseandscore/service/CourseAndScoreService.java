@@ -1,6 +1,7 @@
 package com.cafe24.iumium.courseandscore.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,13 +68,15 @@ public class CourseAndScoreService {
 		//입력된 세션 아이디로 담당 과목 코드 조회
 		if(id.equals("admin")) {
 			insertScore =  courseAndScoreDao.inquireEnrolScoreCourseCodeByAdmin();
-		} else if (level.equals("student")) {
-			insertScore =  courseAndScoreDao.inquireEnrolScoreCourseCode(id);
+		} else if (level != null) {
+			if(level.equals("student")){
+				insertScore =  courseAndScoreDao.inquireEnrolScoreCourseCode(id);
+			}
 		}
 		
-		System.out.println("InsertScore 과목코드 출력: " + insertScore.get(0).getEnrolSubjectNo());
+		/*System.out.println("InsertScore 과목코드 출력: " + insertScore.get(0).getEnrolSubjectNo());
 		System.out.println("InsertScore 과목명 출력: " + insertScore.get(0).getInsertScoreCourseName());
-		
+		*/
 		return insertScore;
 	}
 	
@@ -105,4 +108,11 @@ public class CourseAndScoreService {
 		return courseAndScoreDao.inquireprintScoreCourseByDept(DeptName);
 	}
 	
+	/*
+	 * 7.입력받은 수강신청 데이터로 db에 수강신청내역을 입력하는 dao 호출
+	 */
+	public int addEnrolCourse (HashMap<String,EnrolCourse> CourseList) {
+		
+		return courseAndScoreDao.insertEnrolCourse(CourseList);
+	}
 }

@@ -55,7 +55,13 @@ public class CourseAndScoreController {
 	/*
 	 * 1-1 선택된 과목의 행 정보를 모두 전달하는 배열 값을 받아서 수강신청 테이블에 입력
 	 */
-	
+	@RequestMapping(value="/courseAndScore/addEnrolCourse", method= {RequestMethod.POST, RequestMethod.GET})
+	public String EnrolCourse (HttpServletRequest request) {
+		
+		
+		
+		return "/courseAndScore/enrolCourse";
+	}
 	
 	
 	
@@ -145,7 +151,7 @@ public class CourseAndScoreController {
 	}
 	
 	/*
-	 * 5. 반별 석차 조회
+	 * 5. 반별 석차 조회 서비스 메소드 호출
 	 */
 	
 	@RequestMapping(value="/courseAndScore/printScoreRankInClass", method= {RequestMethod.POST, RequestMethod.GET})
@@ -166,7 +172,7 @@ public class CourseAndScoreController {
 		return "/courseAndScore/printScoreRankInClass";
 	}
 	/*
-	 * 6.학과별 석차 조회
+	 * 6.학과별 석차 조회 서비스 메소드 호출
 	 */
 	@RequestMapping(value="/courseAndScore/printScoreRankInDept", method= {RequestMethod.POST, RequestMethod.GET})
 	public String printScoreCourseByDept(Model model, HttpServletRequest request) {
@@ -183,4 +189,5 @@ public class CourseAndScoreController {
 		
 		return "/courseAndScore/printScoreRankInDept";
 	}
+	
 }
