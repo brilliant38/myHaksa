@@ -2,7 +2,9 @@ package com.cafe24.iumium;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cafe24.iumium.courseandscore.dto.EnrolCourse;
 import com.cafe24.iumium.courseandscore.dto.InsertScore;
@@ -33,21 +36,30 @@ public class CourseAndScoreController {
 	public String enrolCourseList(Model model, HttpSession session) {
 		System.out.println("CourseAndScoreController - enrolCourse() 호출");
 		String id = null;
+		String userLevel = null;
 		
 		//세션 아이디 값이 있을 시 id 문자열 변수에 대입
-		if(session.getId() != null) {
+		if(session.getAttribute("userId") != null) {
 			id = (String)session.getAttribute("userId");
 		}
 		System.out.println("session ID : " + id);
+		
+		if(session.getAttribute("userLevel") != null) {
+			userLevel = (String)session.getAttribute("userLevel");
+		}
+		System.out.println("session userLevel : " + userLevel);
 		
 		/*
 		 *  수강신청 목록 조회 서비스 메소드 호출
 		 *  입력 값 = id, 반환 값 = EnrolCourse 타입 리스트
 		 */
-		List<EnrolCourse> enrolCourse = courseAndScoreService.selectEnrolCourse(id);
+		List<EnrolCourse> enrolCourse = courseAndScoreService.selectEnrolCourse(id,userLevel);
+		
+		List<EnrolCourse> enrolCourseList = courseAndScoreService.selectEnrolCourseList(id);
 		
 		// 모델 객체에 반환 값과 세션 id 저장
 		model.addAttribute("enrolCourse", enrolCourse);
+		model.addAttribute("enrolCourseList", enrolCourseList);
 		model.addAttribute("id", id);
 		
 		return "/courseAndScore/enrolCourse";
@@ -58,12 +70,64 @@ public class CourseAndScoreController {
 	@RequestMapping(value="/courseAndScore/addEnrolCourse", method= {RequestMethod.POST, RequestMethod.GET})
 	public String EnrolCourse (HttpServletRequest request) {
 		
+		String lectureStatusNumber = request.getParameter("lectureStatusNumber") == null?"":request.getParameter("lectureStatusNumber");
+		String id = request.getParameter("id") == null?"":request.getParameter("id");
+		String enrolCourseCourseName = request.getParameter("enrolCourseCourseName") == null?"":request.getParameter("enrolCourseCourseName");
+		String enrolCourseCompletionDivision = request.getParameter("enrolCourseCompletionDivision") == null?"":request.getParameter("enrolCourseCompletionDivision");
+		String enrolCourseCourseCredit = request.getParameter("enrolCourseCourseCredit") == null?"":request.getParameter("enrolCourseCourseCredit");
+		String enrolCourseDeptName = request.getParameter("enrolCourseDeptName") == null?"":request.getParameter("enrolCourseDeptName");
+		String enrolCourseSchoolYear = request.getParameter("enrolCourseSchoolYear") == null?"":request.getParameter("enrolCourseSchoolYear");
+		String enrolCourseClass = request.getParameter("enrolCourseClass") == null?"":request.getParameter("enrolCourseClass");
+		String enrolCourseProfName = request.getParameter("enrolCourseProfName") == null?"":request.getParameter("enrolCourseProfName");
+		String enrolCourseClassroom = request.getParameter("enrolCourseClassroom") == null?"":request.getParameter("enrolCourseClassroom");
+		String enrolCourseYear = request.getParameter("enrolCourseYear") == null?"":request.getParameter("enrolCourseYear");
+		String enrolCourseSemester = request.getParameter("enrolCourseSemester") == null?"":request.getParameter("enrolCourseSemester");
 		
+		System.out.println("lectureStatusNumber에 담긴 데이터 확인 = " + lectureStatusNumber);
 		
-		return "/courseAndScore/enrolCourse";
+		Map<String, String> enrolCourse = new HashMap<String, String>();
+		
+		enrolCourse.put("lectureStatusNumber", lectureStatusNumber);
+		enrolCourse.put("id", id);
+		enrolCourse.put("enrolCourseCourseName", enrolCourseCourseName);
+		enrolCourse.put("enrolCourseCompletionDivision", enrolCourseCompletionDivision);
+		enrolCourse.put("enrolCourseCourseCredit", enrolCourseCourseCredit);
+		enrolCourse.put("enrolCourseDeptName", enrolCourseDeptName);
+		enrolCourse.put("enrolCourseSchoolYear", enrolCourseSchoolYear);
+		enrolCourse.put("enrolCourseClass", enrolCourseClass);
+		enrolCourse.put("enrolCourseProfName", enrolCourseProfName);
+		enrolCourse.put("enrolCourseClassroom", enrolCourseClassroom);
+		enrolCourse.put("enrolCourseYear", enrolCourseYear);
+		enrolCourse.put("enrolCourseSemester", enrolCourseSemester);
+		
+		System.out.println("map에 담긴 데이터 확인 = " + enrolCourse.get("lectureStatusNumber"));
+		
+		courseAndScoreService.addEnrolCourse(enrolCourse);
+		
+		System.out.println("입력 할 강의 계획서 번호 = " + lectureStatusNumber);
+		
+		return "redirect:/courseAndScore/enrolCourse";
 	}
-	
-	
+	/*
+	 * 1-2 선택된 과목의 수강신청 번호를 입력하여 수강신청 내역 삭제
+	 */
+	@RequestMapping(value="/courseAndScore/deleteEnrolCourse", method= {RequestMethod.POST, RequestMethod.GET})
+	public String deleteEnrolCourse (HttpServletRequest request) {
+		
+		String[] arr = request.getParameterValues("lectureStatusNumber");
+		
+		Map<String,String> lectureStatusNumberArr = new HashMap<String,String>();
+		
+		for(int i=0;i<arr.length;i++) {
+			lectureStatusNumberArr.put("arr["+i+"]", arr[i]);
+		}
+		
+		System.out.println("삭제할 수강 신청 내역 번호 = " + lectureStatusNumberArr.get("arr[0]"));
+		
+		courseAndScoreService.deleteEnrolCourse(lectureStatusNumberArr);
+		
+		return "redirect:/courseAndScore/enrolCourse";
+	}
 	
 	/*
 	 *	2.수강 신청된 과목정보를 입력된 학번을 통해서 조회하는 메소드 

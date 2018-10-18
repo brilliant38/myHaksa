@@ -3,6 +3,7 @@ package com.cafe24.iumium.courseandscore.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,14 @@ public class CourseAndScoreService {
 	 * 	학과별반번호 일치하는 강의상황서 조회
 	 * 	조회된 과목 정보 출력 
 	 */
-	public List<EnrolCourse> selectEnrolCourse(String id){ 
+	public List<EnrolCourse> selectEnrolCourse(String id, String level){ 
 		System.out.println("CourseAndScoreService - selectEnrolCourse() 호출");
 		
 		int classByDepartmentNumber = 0; 
 				
 		List<EnrolCourse> lectureStatusNumber = new ArrayList<EnrolCourse>();
 		
-		if(id.equals("admin")) {
+		if(!level.equals("student")) {
 			lectureStatusNumber = courseAndScoreDao.inquireLectureStatusByAdmin();
 			System.out.println("학과별반번호로 강의상황서 번호 : " + lectureStatusNumber);
 		} else if (id != null) {
@@ -45,6 +46,22 @@ public class CourseAndScoreService {
 		//list = courseAndScoreDao.inquireDeptCourse(deptCode);
 		
 		return lectureStatusNumber;
+	}
+	/*
+	 * 1-1 세션 아이디의 수강신청 내역 조회
+	 */
+	
+	public List<EnrolCourse> selectEnrolCourseList(String id) {
+		
+		return courseAndScoreDao.inquireEnrolCourseList(id);
+	}
+	
+	/*
+	 * 1-2 수강신청 내역 삭제
+	 */
+	public int deleteEnrolCourse (Map<String,String> lectureStatusNumberArr) {
+		
+		return courseAndScoreDao.removeEnrolCourse(lectureStatusNumberArr);
 	}
 	
 	/*
@@ -66,10 +83,10 @@ public class CourseAndScoreService {
 		List<InsertScore> insertScore =  new ArrayList<InsertScore>();
 		
 		//입력된 세션 아이디로 담당 과목 코드 조회
-		if(id.equals("admin")) {
+		if(level.equals("admin")) {
 			insertScore =  courseAndScoreDao.inquireEnrolScoreCourseCodeByAdmin();
 		} else if (level != null) {
-			if(level.equals("student")){
+			if(level.equals("teacher")){
 				insertScore =  courseAndScoreDao.inquireEnrolScoreCourseCode(id);
 			}
 		}
@@ -89,7 +106,6 @@ public class CourseAndScoreService {
 		
 		//해당 수강생 학번 리스트 조회
 		List<EnrolCourse> enrolCourse = courseAndScoreDao.inquireEnrolScoreStudentNum(subjectName);
-		
 		
 		return enrolCourse; 
 	}
@@ -111,8 +127,9 @@ public class CourseAndScoreService {
 	/*
 	 * 7.입력받은 수강신청 데이터로 db에 수강신청내역을 입력하는 dao 호출
 	 */
-	public int addEnrolCourse (HashMap<String,EnrolCourse> CourseList) {
+	public int addEnrolCourse (Map<String, String> enrolCourse) {
 		
-		return courseAndScoreDao.insertEnrolCourse(CourseList);
+		
+		return courseAndScoreDao.insertEnrolCourse(enrolCourse);
 	}
 }

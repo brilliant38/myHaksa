@@ -22,57 +22,6 @@
 
 <!-- Custom styles for this template-->
 <link href="/resources/css/sb-admin.css" rel="stylesheet">
-<script type="text/javascript">
-$(document).ready(function(){
-	
-	$('.enrolDatas').click(function() {
-		
-		var str = ""
-		var tdArr = new Array(); 
-		
-		// 현재 클릭된 Row(<tr>)
-		var enrolDatas_tr = $(this);
-		var enrolDatas_td = enrolDatas_tr.children();
-		
-		console.log("클릭한 Row의 모든 데이터 : " + enrolDatas_tr.text());
-		
-		enrolDatas_td.each(function(i){
-	        tdArr.push(enrolDatas_td.eq(i).text());
-	    });
-		
-		console.log("배열에 담긴 값 : " + tdArr);
-		console.log("0번 배열에 담긴 값 : " + tdArr[0]);
-		
- 		var num1 = tdArr.length;
-		
-		console.log("배열 길이 : " + num1);
-		
-		$('.enrolDatasList').insertBefore(function(){
-			
-			$('.enrolDatasList').empty();
-			
-			var text = '<tr onclick ="delete_data($(this))">';
-			
-			$.each(tdArr,function(i){
-					text += '<td>' + tdArr[i] + '</td>';
-			});
-			
-			text += '</tr>';
-			text += '<tr align="right"><td colspan="15"><button type="submit" class="btn btn-success">수강신청완료</button></td></tr>';
-			
-			$('.enrolDatasList').append(text);
-		});
-	});
-	
-	function delete_data(row)
-    {
-        row.closest('tr').remove();
-    }
-	
-		
-});
-	
-</script>
 
 <style>
 	#enrolCourseMain{
@@ -104,7 +53,6 @@ $(document).ready(function(){
 				 3.학과 번호가 일치하는 과목들 정보 조회
 				 4.조회된 과목 정보 출력
 			 -->
-			
 			<form action="/courseAndScore/addEnrolCourse" method="post">
 				<table class="table table-bordered table-hover text-center">
 					<thead align="center">
@@ -112,9 +60,11 @@ $(document).ready(function(){
 							<td scope="col" colspan="15">
 								<p id = "enrolCourseMain">수강 신청 가능 목록</p>
 								<button type="button" class="btn btn-info" onclick="history.go(-1);">이전화면</button>
+								<!-- <button type="button" class="btn btn-info" class="clearAll">전체삭제</button> -->
 							</td>
 					    </tr>
 						<tr>
+							<th>선택</th>
 							<th>강좌번호</th>
 							<th>학번</th>
 							<th>과목명</th>
@@ -134,37 +84,42 @@ $(document).ready(function(){
 					<tbody align="center">
 						<c:forEach var="row" items="${enrolCourse}">
 							<tr class="enrolDatas">
+								<td id="checkEnrol"><input type="checkbox" name="lectureStatusNumber" class="addBasket" value="${row.lectureStatusNumber}"></td>
 								<td id="lectureStatusNumber">${row.lectureStatusNumber}</td>
-								<td id="id">${id}</td>
-								<td id="enrolCourseCourseName">${row.enrolCourseCourseName}</td>
-								<td id="enrolCourseCompletionDivision">${row.enrolCourseCompletionDivision}</td>
-								<td id="enrolCourseCourseCredit">${row.enrolCourseCourseCredit}</td>
-								<td id="enrolCourseDeptName">${row.enrolCourseDeptName}</td>
-								<td id="enrolCourseSchoolYear">${row.enrolCourseSchoolYear}</td>
-								<td id="enrolCourseClass">${row.enrolCourseClass}</td>
-								<td id="enrolCourseProfName">${row.enrolCourseProfName}</td>
-								<td id="enrolCourseClassroom">${row.enrolCourseClassroom}</td>
-								<td id="enrolCourseYear">${row.enrolCourseYear}</td>
-								<td id="enrolCourseSemester">${row.enrolCourseSemester}</td>
+								<td id="id"><input type="hidden" name="id" value="${id}">${id}</td>
+								<td id="enrolCourseCourseName"><input type="hidden" name="enrolCourseCourseName" value="${row.enrolCourseCourseName}">${row.enrolCourseCourseName}</td>
+								<td id="enrolCourseCompletionDivision"><input type="hidden" name="enrolCourseCompletionDivision" value="${row.enrolCourseCompletionDivision}">${row.enrolCourseCompletionDivision}</td>
+								<td id="enrolCourseCourseCredit"><input type="hidden" name="enrolCourseCourseCredit" value="${row.enrolCourseCourseCredit}">${row.enrolCourseCourseCredit}</td>
+								<td id="enrolCourseDeptName"><input type="hidden" name="enrolCourseDeptName" value="${row.enrolCourseDeptName}">${row.enrolCourseDeptName}</td>
+								<td id="enrolCourseSchoolYear"><input type="hidden" name="enrolCourseSchoolYear" value="${row.enrolCourseSchoolYear}">${row.enrolCourseSchoolYear}</td>
+								<td id="enrolCourseClass"><input type="hidden" name="enrolCourseClass" value="${row.enrolCourseClass}">${row.enrolCourseClass}</td>
+								<td id="enrolCourseProfName"><input type="hidden" name="enrolCourseProfName" value="${row.enrolCourseProfName}">${row.enrolCourseProfName}</td>
+								<td id="enrolCourseClassroom"><input type="hidden" name="enrolCourseClassroom" value="${row.enrolCourseClassroom}">${row.enrolCourseClassroom}</td>
+								<td id="enrolCourseYear"><input type="hidden" name="enrolCourseYear" value="${row.enrolCourseYear}">${row.enrolCourseYear}</td>
+								<td id="enrolCourseSemester"><input type="hidden" name="enrolCourseSemester" value="${row.enrolCourseSemester}">${row.enrolCourseSemester}</td>
 								<td></td>
 								<td id="lectureStatusLimitNumber">${row.lectureStatusLimitNumber}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
-					
+					<tfoot>
+						<tr>
+							<td colspan="15" align="right"><button type="submit" class="btn btn-success" id="enrolSuccess">수강신청완료</button></td>
+						</tr>
+					</tfoot>
 				</table>
-				
+			</form>	
+			
+			<form action="/courseAndScore/deleteEnrolCourse" method="post">
 				<table class="table table-bordered table-hover text-center">
 					<thead align="center">
 						<tr align="left">
 							<td scope="col" colspan="15">
-								<p id = "enrolCourseMain">과목 선택 내역</p>
+								<p id = "enrolCourseMain">수강 신청 내역</p>
 								<br><br>
 							</td>
 					    </tr>
 						<tr>
-							<th>선택</th>
-							<th>강좌번호</th>
 							<th>학번</th>
 							<th>과목명</th>
 							<th>이수구분</th>
@@ -181,12 +136,30 @@ $(document).ready(function(){
 						</tr>
 					</thead>
 					<tbody align="center" class="enrolDatasList">
-						<tr align="right">
-							<td colspan="15"><button type="submit" class="btn btn-success">수강신청완료</button></td>
-						</tr>
+						<c:forEach var="row" items="${enrolCourseList}">
+							<tr>
+								<td id="checkEnrol"><input type="checkbox" name="lectureStatusNumber" class="addBasket" value="${row.enrolCourseNo}"></td>
+								<td id="enrolCourseCourseName"><input type="hidden" name="enrolCourseCourseName" value="${row.enrolCourseCourseName}">${row.enrolCourseCourseName}</td>
+								<td id="enrolCourseCompletionDivision"><input type="hidden" name="enrolCourseCompletionDivision" value="${row.enrolCourseCompletionDivision}">${row.enrolCourseCompletionDivision}</td>
+								<td id="enrolCourseCourseCredit"><input type="hidden" name="enrolCourseCourseCredit" value="${row.enrolCourseCourseCredit}">${row.enrolCourseCourseCredit}</td>
+								<td id="enrolCourseDeptName"><input type="hidden" name="enrolCourseDeptName" value="${row.enrolCourseDeptName}">${row.enrolCourseDeptName}</td>
+								<td id="enrolCourseSchoolYear"><input type="hidden" name="enrolCourseSchoolYear" value="${row.enrolCourseSchoolYear}">${row.enrolCourseSchoolYear}</td>
+								<td id="enrolCourseClass"><input type="hidden" name="enrolCourseClass" value="${row.enrolCourseClass}">${row.enrolCourseClass}</td>
+								<td id="enrolCourseProfName"><input type="hidden" name="enrolCourseProfName" value="${row.enrolCourseProfName}">${row.enrolCourseProfName}</td>
+								<td id="enrolCourseClassroom"><input type="hidden" name="enrolCourseClassroom" value="${row.enrolCourseClassroom}">${row.enrolCourseClassroom}</td>
+								<td id="enrolCourseYear"><input type="hidden" name="enrolCourseYear" value="${row.enrolCourseYear}">${row.enrolCourseYear}</td>
+								<td id="enrolCourseSemester"><input type="hidden" name="enrolCourseSemester" value="${row.enrolCourseSemester}">${row.enrolCourseSemester}</td>
+								<td></td>
+								<td id="lectureStatusLimitNumber"><input type="hidden" name="lectureStatusLimitNumber" value="${row.enrolCourseCourseRetakeNumber}">${row.enrolCourseCourseRetakeNumber}</td>
+							</tr>
+						</c:forEach>
 					</tbody>
+					<tfoot>
+						<tr align="right">
+							<td colspan="15" align="right"><button type="submit" class="btn btn-success" id="deleteSuccess">수강신청삭제</button></td>
+						</tr>
+					</tfoot>
 				</table>
-				
 			</form>
 
 			<!-- Sticky Footer -->

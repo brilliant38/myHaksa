@@ -56,14 +56,14 @@
 				<div class="form-group">
 					<div class="form-label-group">
 						<input type="text" id="inputId" name="id" class="form-control"
-							placeholder="ID" required="required" value="201800001"
+							placeholder="ID" required="required" value="1234"
 							autofocus="autofocus"> <label for="inputId">아이디</label>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="form-label-group">
 						<input type="password" id="inputPassword" name="pw" class="form-control"
-							placeholder="Password" value="954321" required="required"> <label
+							placeholder="Password" value="123456" required="required"> <label
 							for="inputPassword">비밀번호</label>
 					</div>
 					<span id="loginHelper" style="margin-left:12px; color:red; font-size:14px"></span>
